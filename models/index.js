@@ -35,3 +35,8 @@ module.exports = {
   Tag,
   ProductTag,
 };
+
+
+
+
+// product_name has tags
