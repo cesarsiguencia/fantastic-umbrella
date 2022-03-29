@@ -11,12 +11,10 @@ router.get('/', (req, res) => {
     include: [
       {
         model: Product,
-        attributes: ['id', 'category_name', 'price', 'stock', 'category_id'],
-        include: {
-          model: ProductTag,
-          attributes: ["id","product_id","tag_id"]
-        }
-      },
+        attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
+        through: ProductTag,
+        as: 'associated_products',
+      }
     ]
   })
   .then(dbTags => res.json(dbTags))
@@ -37,11 +35,9 @@ router.get('/:id', (req, res) => {
     include: [
       {
         model: Product,
-        attributes: ['id', 'category_name', 'price', 'stock', 'category_id'],
-        include: {
-          model: ProductTag,
-          attributes: ["id","product_id","tag_id"]
-        }
+        attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
+        through: ProductTag,
+        as: 'associated_products',
       },
     ]
   })
@@ -75,7 +71,7 @@ router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
   Tag.update(
     {
-      tag_name: req.body.title
+      tag_name: req.body.tag_name
     },
     {
       where: {
