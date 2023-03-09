@@ -190,7 +190,13 @@ router.delete('/:id', (req, res) => {
     where: {
       id: req.params.id
     }
-  })
+  }).then(
+    ProductTag.destroy({
+      where: {
+        product_id: req.params.id
+      }
+    })
+  )
   .then(dbProducts => {
     if (!dbProducts) {
       res.status(404).json({ message: 'No product found with this id' });
