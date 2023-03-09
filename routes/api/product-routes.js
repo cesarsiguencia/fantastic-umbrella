@@ -78,26 +78,26 @@ router.post('/', (req, res) => {
     price: req.body.price,
     stock: req.body.stock,
     category_id: req.body.category_id,
-    tagIds: req.body.tag_id
+    // tag_id: req.body.tag_id
   })
 
   
-    .then((product) => {
-
+    // .then((product) => {
+    //   const tagsArray = [req.body.tag_id]
       
-      // if there's product tags, we need to create pairings to bulk create in the ProductTag model
-      if (req.body.tagIds.length) {
-        const productTagIdArr = req.body.tagIds.map((tagId) => {
-          return {
-            product_id: product.id,
-            tag_id: tagId,
-          };
-        });
-        return ProductTag.bulkCreate(productTagIdArr);
-      }
-      // if no product tags, just respond
-      res.status(200).json(product);
-    })
+    //   // if there's product tags, we need to create pairings to bulk create in the ProductTag model
+    //   if (tagsArray.length) {
+    //     const productTagIdArr = tagsArray.map((tagId) => {
+    //       return {
+    //         product_id: product.id,
+    //         tag_id: tagId,
+    //       };
+    //     });
+    //     return ProductTag.bulkCreate(productTagIdArr);
+    //   }
+    //   // if no product tags, just respond
+    //   res.status(200).json(product);
+    // })
 
 
 
@@ -113,6 +113,25 @@ router.post('/', (req, res) => {
       res.status(400).json(err);
     });
 });
+
+router.put('/tags', (req,res) => {
+  ProductTag.create({
+    product_id: req.body.product_id,
+    tag_id: req.body.tag_id
+  }).then(() => {
+    return Product.findOne({
+      where: {
+        id: req.body.product_id
+      },
+      attributes: ['id','product_name']
+    })
+  }).then(dbProductTag => res.json(dbProductTag))
+  .catch(err => {
+    console.log(err)
+    res.status(400).json(err)
+  })
+ 
+})
 
 // // update product
 // router.put('/:id', (req, res) => {
@@ -162,6 +181,8 @@ router.post('/', (req, res) => {
 //       res.status(400).json(err);
 //     });
 // });
+
+
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
