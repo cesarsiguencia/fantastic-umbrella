@@ -41,13 +41,23 @@ Product.init(
         key: 'id'
       }
     },
-    tag_id:{
-      type: DataTypes.INTEGER,
-      references: {
-        model:'tag',
-        key:'id'
-      }
-
+    // tag_id:{
+    //   type: DataTypes.INTEGER,
+    //   references: {
+    //     model:'tag',
+    //     key:'id'
+    //   }
+    // }
+    // ,
+    tag_id: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      get() {
+          return this.getDataValue('tag_id').split(';')
+      },
+      set(val) {
+         this.setDataValue('tag_id',val.join(';'));
+      },
     }
   },
   {
