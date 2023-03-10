@@ -89,18 +89,24 @@ router.delete('/:id', (req, res) => {
     where: {
       id: req.params.id
     }
-  })
-    .then(dbTags => {
-      if (!dbTags) {
-        res.status(404).json({ message: 'No tag found with this id' });
-        return;
+  }).then(
+    ProductTag.destroy({
+      where: {
+        tag_id: req.params.id
       }
-      res.json(dbTags);
     })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
+  )
+  .then(dbTags => {
+    if (!dbTags) {
+      res.status(404).json({ message: 'No tag found with this id' });
+      return;
+    }
+    res.json(dbTags);
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json(err);
+  });
 });
 
 module.exports = router;
