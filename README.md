@@ -23,16 +23,16 @@ This application can only be run locally. Follow instructions below on how to ru
 
 1. Category
 2. Product
-3. Product Tags
+3. ProductTags (Links a Product to a Tag, a Product can have many ProductTag)
 4. Tag
 
 
 ### List of Built APIs in this application
 
-- GET (ALL categories, ONE category, ALL products, ONE product, ALL tags, ONE tag)
-- POST (ONE category, ONE product, ONE tag)
-- PUT (UPDATE category name, UPDATE product details, UPDATE tag name)
-- DELETE (ONE category, ONE product, ONE tag)
+- GET (GET ALL categories, GET ONE category, GET ALL products, GET ONE product, GET ALL tags, GET ONE tag)
+- POST (CREATE ONE category, CREATE ONE product, CREATE ONE tag)
+- PUT (UPDATE category name, UPDATE product details, UPDATE tag name, CREATE (ProductTag through a PUT product route))
+- DELETE (DELETE ONE category, DELETE ONE product (also deletes associated ProductTag), DELETE ONE tag (also deletes associated ProductTag))
 
 
 ### Website Link
